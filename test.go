@@ -18,4 +18,9 @@ func testTorrentFile() {
 	fmt.Printf("%d\n", tf.Length)
 	fmt.Printf("%s\n", tf.Name)
 
+	peers, err := tf.RequestPeers([20]byte{}, torrentfile.Port)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("%v", peers)
 }

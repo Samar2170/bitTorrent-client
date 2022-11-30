@@ -2,8 +2,10 @@ package torrentfile
 
 import (
 	"bytes"
+	"crypto/rand"
 	"crypto/sha1"
 	"errors"
+	"fmt"
 	"os"
 
 	bencode "github.com/jackpal/bencode-go"
@@ -87,4 +89,19 @@ func (bto *bencodeTorrent) toTorrentFile() (TorrentFile, error) {
 		Length:      bto.Info.Length,
 		Name:        bto.Info.Name,
 	}, nil
+}
+
+func (t *TorrentFile) DownloadToFile(path string) error {
+	var peerID [20]byte
+	_, err := rand.Read(peerID[:])
+	if err != nil {
+		return err
+	}
+	peers, err := t.RequestPeers(peerID, Port)
+	if err != nil {
+		return err
+	}
+	fmt.Println(peers)
+	return nil
+	// torrent:=
 }
