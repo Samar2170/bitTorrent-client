@@ -3,7 +3,7 @@ package client
 import (
 	"net"
 
-	"github.com/Samar2170/bitTorrent-client.git/bitfield"
+	"github.com/Samar2170/bitTorrent-client/bitfield"
 	"github.com/Samar2170/bitTorrent-client/peers"
 )
 
