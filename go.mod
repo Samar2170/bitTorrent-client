@@ -1,4 +1,4 @@
-module github.com/Samar2170/bitTorrent-client.git
+module github.com/Samar2170/bitTorrent-client
 
 go 1.19
 
