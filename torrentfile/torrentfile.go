@@ -5,9 +5,9 @@ import (
 	"crypto/rand"
 	"crypto/sha1"
 	"errors"
-	"fmt"
 	"os"
 
+	"github.com/Samar2170/bitTorrent-client/p2p"
 	bencode "github.com/jackpal/bencode-go"
 )
 
@@ -101,7 +101,28 @@ func (t *TorrentFile) DownloadToFile(path string) error {
 	if err != nil {
 		return err
 	}
-	fmt.Println(peers)
+	torrent := p2p.Torrent{
+		InfoHash:    t.InfoHash,
+		PeerID:      peerID,
+		Peers:       peers,
+		PieceHashes: t.PieceHashes,
+		PieceLength: t.PieceLength,
+		Length:      t.Length,
+		Name:        t.Name,
+	}
+	buf, err := torrent.Download()
+	if err != nil {
+		return err
+	}
+
+	outFile, err := os.Create(path)
+	if err != nil {
+		return err
+	}
+	defer outFile.Close()
+	_, err = outFile.Write(buf)
+	if err != nil {
+		return err
+	}
 	return nil
-	// torrent:=
 }
